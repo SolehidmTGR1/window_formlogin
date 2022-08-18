@@ -1,0 +1,48 @@
+Imports System.Data.Odbc
+Public Class form_login
+    Sub terbuka()
+        Form1.Show()
+    End Sub
+    Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
+        If UsernameTextBox.Text = "" Or PasswordTextBox.Text = "" Then
+            MsgBox("kode admin atau password tidak boleh kosong")
+        Else
+            Call koneksi()
+            cmd = New OdbcCommand("Select * from tbl_login where username='" & UsernameTextBox.Text & "' and password='" & PasswordTextBox.Text & "'", conn)
+            rd = cmd.ExecuteReader
+            rd.Read()
+            If rd.HasRows Then
+                'If TextBox1.Text = "AA" And TextBox2.Text = "BB" Then
+                Call terbuka()
+            Else
+                MsgBox("kode admin atau password salah")
+                UsernameTextBox.Clear()
+                PasswordTextBox.Clear()
+                Me.Close()
+            End If
+        End If
+    End Sub
+    Private Function password() As Object
+        Throw New NotImplementedException
+    End Function
+
+    Private Sub Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel.Click
+        Me.Close()
+    End Sub
+
+    Private Sub form_login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        PasswordTextBox.PasswordChar = "*"
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.Checked = True Then
+            PasswordTextBox.PasswordChar = ""
+        Else
+            PasswordTextBox.PasswordChar = "*"
+        End If
+    End Sub
+
+    Private Sub PasswordTextBox_TextChanged(sender As Object, e As EventArgs) Handles PasswordTextBox.TextChanged
+
+    End Sub
+End Class
