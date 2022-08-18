@@ -1,0 +1,20 @@
+Imports System.Data.Odbc
+Public Class Form1
+    Sub tampil()
+        Call koneksi()
+        da = New OdbcDataAdapter("Select * From tbl_user", conn)
+        ds = New DataSet
+        da.Fill(ds, "tbl_user")
+        DataGridView1.DataSource = ds.Tables("tbl_user")
+        DataGridView1.ReadOnly = True
+
+    End Sub
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Call tampil()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.Close()
+        form_login.Close()
+    End Sub
+End Class
